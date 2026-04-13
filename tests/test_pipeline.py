@@ -14,6 +14,10 @@ def test_pipeline_runs_with_sample_data() -> None:
     assert "cumulative_return" in output.summary
     assert output.summary["number_of_rebalance_dates"] > 0
     assert not output.weights.empty
+    assert not output.diagnostics.ic_series.empty
+    assert not output.diagnostics.rank_ic_series.empty
+    assert "mean_ic" in output.diagnostics.summary
+    assert "mean_rank_ic" in output.diagnostics.summary
     assert "mean_ic" in output.diagnostics.summary
     assert "mean_rank_ic" in output.diagnostics.summary
     assert not output.diagnostics.ic_series.empty

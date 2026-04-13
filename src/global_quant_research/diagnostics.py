@@ -18,7 +18,10 @@ def _cross_sectional_corr(
         joined = pd.concat([score, fwd], axis=1, keys=["score", "fwd"]).dropna()
         if len(joined) < 2:
             continue
-        corr = joined["score"].corr(joined["fwd"], method=method)
+        if method == "spearman":
+            corr = joined["score"].rank().corr(joined["fwd"].rank(), method="pearson")
+        else:
+            corr = joined["score"].corr(joined["fwd"], method=method)
         if pd.notna(corr):
             values[date] = float(corr)
     return pd.Series(values).sort_index()

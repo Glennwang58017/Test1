@@ -23,7 +23,7 @@ def main() -> None:
     print(result.diagnostics.ic_series.tail(5).to_string())
 
     print("\nLatest quantile spread return:")
-    print(result.diagnostics.long_short_spread_returns.tail(5).to_string())
+    print(result.diagnostics.quantile_spread.tail(5).to_string())
 
     print("\nLatest portfolio weights:")
     print(result.weights.tail(10).to_string())

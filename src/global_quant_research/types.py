@@ -53,7 +53,8 @@ class BacktestOutput:
 @dataclass(frozen=True)
 class FactorDiagnostics:
     summary: dict[str, float]
-    ic_series: pd.DataFrame
+    ic_series: pd.Series
+    rank_ic_series: pd.Series
     quantile_returns: pd.DataFrame
     quantile_cumulative_returns: pd.DataFrame
     quantile_spread: pd.Series

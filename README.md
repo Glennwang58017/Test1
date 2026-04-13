@@ -6,6 +6,7 @@
 - 全球资产池截面选股
 - 多空组合构建
 - 含换手成本的简化回测
+- 因子研究诊断（IC / RankIC / 分层收益）
 - 快速扩展到你自己的数据与因子
 
 ## 项目结构
@@ -27,6 +28,7 @@
 │       ├── config.py              # 配置加载
 │       ├── data.py                # 数据读取与清洗
 │       ├── factors.py             # 因子构建
+│       ├── diagnostics.py         # 因子诊断分析
 │       ├── pipeline.py            # 研究流水线
 │       ├── portfolio.py           # 组合构建与调仓
 │       ├── run.py                 # 命令行运行入口
@@ -50,6 +52,7 @@ python3 -m global_quant_research
 ```
 
 运行后会输出策略关键指标（累计收益、年化收益、波动率、夏普、最大回撤、胜率、平均换手等）以及最近一期权重。
+同时会输出因子诊断统计（均值 IC、均值 RankIC、ICIR、分层价差收益等）。
 
 ### 3) 重新生成样本数据（可选）
 
@@ -72,6 +75,22 @@ python3 scripts/generate_sample_data.py
 - `backtest`:
   - `periods_per_year`: 年化换算周期（月频用 12，日频用 252）
   - `transaction_cost_bps`: 单边交易成本（基点）
+
+## 因子诊断输出说明
+
+研究流水线会返回 `output.diagnostics`，包含：
+
+- `summary`：
+  - `mean_ic`
+  - `mean_rank_ic`
+  - `ic_ir`
+  - `rank_ic_ir`
+  - `mean_quantile_spread`
+- `ic_series`: 每期 IC 序列
+- `rank_ic_series`: 每期 RankIC 序列
+- `quantile_returns`: 各分层未来收益
+- `quantile_cumulative_returns`: 各分层累计收益
+- `quantile_spread`: 顶层 - 底层 分层价差收益
 
 ## 下一步可扩展方向
 

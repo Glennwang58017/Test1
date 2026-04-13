@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "global-quant-research"
+version = "0.1.0"
+description = "A starter project for global quantitative model research."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Cursor Agent" }]
+dependencies = [
+    "numpy>=2.2.0",
+    "pandas>=2.2.0",
+    "pyyaml>=6.0.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

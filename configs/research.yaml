@@ -1,0 +1,20 @@
+data:
+  csv_path: "data/sample/global_prices_sample.csv"
+  date_col: "date"
+  asset_col: "asset"
+  price_col: "close"
+
+factors:
+  momentum_window: 12
+  short_reversal_window: 1
+  volatility_window: 12
+  normalize_cross_sectional: true
+
+portfolio:
+  top_quantile: 0.3
+  bottom_quantile: 0.3
+  rebalance_frequency: "ME"
+
+backtest:
+  periods_per_year: 12
+  transaction_cost_bps: 5.0

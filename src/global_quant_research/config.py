@@ -19,7 +19,7 @@ def load_config(path: str | Path) -> ResearchConfig:
 
     return ResearchConfig(
         data=DataConfig(
-            data_path=data["csv_path"],
+            csv_path=data["csv_path"],
             date_col=data["date_col"],
             asset_col=data["asset_col"],
             price_col=data["price_col"],

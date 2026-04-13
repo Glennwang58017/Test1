@@ -4,34 +4,27 @@ from __future__ import annotations
 
 import pandas as pd
 
+from .types import FactorConfig
 
-def compute_features(
-    prices: pd.DataFrame,
-    lookback_momentum: int,
-    lookback_reversal: int,
-    lookback_volatility: int,
-) -> pd.DataFrame:
-    """Return MultiIndex factor features indexed by (date, asset)."""
+
+def _zscore_rowwise(df: pd.DataFrame) -> pd.DataFrame:
+    mean = df.mean(axis=1)
+    std = df.std(axis=1).replace(0.0, pd.NA)
+    return df.sub(mean, axis=0).div(std, axis=0)
+
+
+def build_factor_scores(prices: pd.DataFrame, config: FactorConfig) -> pd.DataFrame:
+    """Build composite cross-sectional factor scores in wide format."""
     returns = prices.pct_change()
-    momentum = prices.pct_change(lookback_momentum)
-    reversal = -prices.pct_change(lookback_reversal)
-    volatility = returns.rolling(lookback_volatility).std()
+    momentum = prices.pct_change(config.momentum_window)
+    reversal = -prices.pct_change(config.short_reversal_window)
+    volatility = returns.rolling(config.volatility_window).std()
 
-    features = (
-        momentum.stack().rename("momentum").to_frame()
-        .join(reversal.stack().rename("reversal").to_frame(), how="outer")
-        .join(volatility.stack().rename("volatility").to_frame(), how="outer")
-    )
-    return features.dropna().sort_index()
+    if config.normalize_cross_sectional:
+        momentum = _zscore_rowwise(momentum)
+        reversal = _zscore_rowwise(reversal)
+        volatility = _zscore_rowwise(volatility)
 
-
-def composite_signal(features: pd.DataFrame) -> pd.Series:
-    """Build a simple standardized composite score from raw factors."""
-    out = features.copy()
-    for col in ["momentum", "reversal", "volatility"]:
-        cs_mean = out[col].groupby(level=0).transform("mean")
-        cs_std = out[col].groupby(level=0).transform("std").replace(0.0, pd.NA)
-        out[col] = (out[col] - cs_mean) / cs_std
-    score = out["momentum"] + out["reversal"] - out["volatility"]
-    return score.fillna(0.0).rename("score")
+    score = momentum + reversal - volatility
+    return score.dropna(how="all")
 

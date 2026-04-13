@@ -13,7 +13,7 @@ factors:
 portfolio:
   top_quantile: 0.3
   bottom_quantile: 0.3
-  rebalance_frequency: "M"
+  rebalance_frequency: "ME"
 
 backtest:
   periods_per_year: 12

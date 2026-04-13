@@ -68,7 +68,7 @@ python3 scripts/generate_sample_data.py
 - `portfolio`:
   - `top_quantile`: 做多分位数
   - `bottom_quantile`: 做空分位数
-  - `rebalance_frequency`: 调仓频率（例如 `M`）
+  - `rebalance_frequency`: 调仓频率（例如 `ME`，表示月末）
 - `backtest`:
   - `periods_per_year`: 年化换算周期（月频用 12，日频用 252）
   - `transaction_cost_bps`: 单边交易成本（基点）

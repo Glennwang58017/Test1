@@ -13,7 +13,7 @@ def main() -> None:
     result = run_research_pipeline(config)
 
     print("=== Global Quant Research Result ===")
-    for k, v in result.metrics.items():
+    for k, v in result.summary.items():
         print(f"{k}: {v:.6f}")
     print("\nLatest portfolio weights:")
     print(result.weights.tail(10).to_string())

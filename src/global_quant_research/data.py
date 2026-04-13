@@ -9,7 +9,7 @@ from .types import DataConfig
 
 def load_market_data(cfg: DataConfig) -> pd.DataFrame:
     """Load long-format price data and return wide price panel (date x asset)."""
-    csv_path = Path(cfg.path)
+    csv_path = Path(cfg.csv_path)
     df = pd.read_csv(csv_path)
     expected = {cfg.date_col, cfg.asset_col, cfg.price_col}
     missing = expected - set(df.columns)

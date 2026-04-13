@@ -1,5 +1,5 @@
 """Global quantitative research starter package."""
 
-from .pipeline import run_research
+from .pipeline import run_research_pipeline
 
-__all__ = ["run_research"]
+__all__ = ["run_research_pipeline"]

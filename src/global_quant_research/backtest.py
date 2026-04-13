@@ -58,6 +58,7 @@ def run_backtest(
         "max_drawdown": _max_drawdown(equity_curve),
         "win_rate": float((net_returns > 0).mean()) if not net_returns.empty else 0.0,
         "average_turnover": float(turnover.mean()) if not turnover.empty else 0.0,
+        "number_of_rebalance_dates": float((aligned_weights.diff().abs().sum(axis=1) > 0).sum()),
     }
 
     return BacktestOutput(

@@ -8,7 +8,7 @@ import pandas as pd
 
 def generate_prices(n_months: int = 120, seed: int = 42) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
-    dates = pd.date_range("2016-01-31", periods=n_months, freq="M")
+    dates = pd.date_range("2016-01-31", periods=n_months, freq="ME")
     assets = [
         ("SPY_US", "US", "Equity"),
         ("QQQ_US", "US", "Equity"),

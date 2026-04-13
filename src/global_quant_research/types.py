@@ -51,6 +51,15 @@ class BacktestOutput:
 
 
 @dataclass(frozen=True)
+class FactorDiagnostics:
+    summary: dict[str, float]
+    ic_series: pd.DataFrame
+    quantile_returns: pd.DataFrame
+    quantile_cumulative_returns: pd.DataFrame
+    quantile_spread: pd.Series
+
+
+@dataclass(frozen=True)
 class ResearchOutput:
     summary: dict[str, float]
     returns: pd.Series
@@ -58,3 +67,4 @@ class ResearchOutput:
     turnover: pd.Series
     weights: pd.DataFrame
     factor_scores: pd.DataFrame
+    diagnostics: FactorDiagnostics

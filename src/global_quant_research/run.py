@@ -15,6 +15,16 @@ def main() -> None:
     print("=== Global Quant Research Result ===")
     for k, v in result.summary.items():
         print(f"{k}: {v:.6f}")
+    print("\n=== Factor Diagnostics ===")
+    for k, v in result.diagnostics.summary.items():
+        print(f"{k}: {v:.6f}")
+
+    print("\nLatest IC / RankIC:")
+    print(result.diagnostics.ic_series.tail(5).to_string())
+
+    print("\nLatest quantile spread return:")
+    print(result.diagnostics.long_short_spread_returns.tail(5).to_string())
+
     print("\nLatest portfolio weights:")
     print(result.weights.tail(10).to_string())
 
